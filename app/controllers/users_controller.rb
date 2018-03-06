@@ -13,7 +13,7 @@ class UsersController < ApplicationController
                 session[:id]=user.id
                 redirect "bookmarks"
             else
-                flash[:warning]="Unable to create a new account. Please try again"
+                flash[:warning]="Unable to log in. Remember that all field are required. Please try again"
                 redirect "signup"
             end
 
