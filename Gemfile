@@ -12,5 +12,6 @@ gem 'pry'
 gem 'bcrypt'  
 gem 'tux' 
 gem 'ripl-irb'
+gem 'sinatra-flash'
 gem 'require_all'
 
