@@ -4,7 +4,8 @@ class UsersController < ApplicationController
     end
     post '/signup' do
         if !!User.find_by(username: params[:username])
-            #username already exits either try again or login in your account
+            flash[:warning]=" Username already exits. Try again or login in your account"
+            redirect "signup"
         else
             user=User.new(username: params[:username], email: params[:email])
             user.password = params[:password]
@@ -12,6 +13,8 @@ class UsersController < ApplicationController
                 session[:id]=user.id
                 redirect "bookmarks"
             else
+                flash[:warning]="Unable to create a new account. Please try again"
+                redirect "signup"
             end
 
 
