@@ -1,3 +1,17 @@
-<h1>Bookmark Organizer - Bookmarks</h1>
+<h1>Bookmark Organizer - <%=@user.username%></h1>
+<h2>Bookmarks</h2>
+<ul>
+    <%@bookmarks.each do |bookmark|%>
+        <li><%=bookmark.name%></li>
+    <%end%>
+</ul>
+
+<h2>Tags</h2>
+<ul>
+    <%@tags.each do |tag|%>
+        <li><%=tag.name%></li>
+    <%end%>
+</ul>
+
 
 

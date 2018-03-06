@@ -1,7 +1,13 @@
 class BookmarksController < ApplicationController
     get '/bookmarks' do
-        @bookmarks=Bookmark.all.last
-        erb :'bookmarks/index'
+        if logged_in?
+            @user=current_user
+            @bookmarks=current_user.bookmarks
+            @tags=current_user.tags
+            erb :'bookmarks/index'
+        else
+            redirect "login"
+        end
     end
 
 end
