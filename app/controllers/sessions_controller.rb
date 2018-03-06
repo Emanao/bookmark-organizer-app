@@ -1,3 +1,6 @@
-class SessionsController < Sinatra::Base
+class SessionsController < ApplicationController
+    get '/login' do
+        "Hello Login World"
+    end
   
 end
