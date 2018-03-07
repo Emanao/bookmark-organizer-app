@@ -1,0 +1,15 @@
+<h1>Show Bookmark</h1>
+Name : <%=@bookmark.name%><br></br>
+URL: <%=@bookmark.url%><br></br>
+<h2>Tags</h2>
+<%@bookmark.tags.each do |tag|%>
+    <%=tag.name%>
+<%end%>
+<br></br>
+<form action='/bookmarks/<%=@bookmark.id%>/edit' method='get'>
+<input type='submit' value='Edit Bookmark'>
+</form>
+<form action='/bookmarks/<%=@bookmark.id%>/delete' method='post'>
+<input type='hidden' name='_method' value='delete'>
+<input type='submit' value='Delete Bookmark'>
+</form>
