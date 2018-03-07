@@ -1,0 +1,13 @@
+<h1>Create New Bookmark</h1>
+<form action='/bookmarks' method='post'>
+    <p><label for='bookmark_name'>Name: </label><input type='text' id='bookmark_name' name='bookmark[name]'></p>
+    <p><label for='bookmark_url'>URL: </label><input type='text' id='bookmark_url' name='bookmark[url]'></p>
+    <label>Choose an existing tag: </label>
+    <%@tags.each do |tag|%>
+        <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'>
+        <%=tag.name%>
+    <%end%><br></br>
+    <label>and/or, create a new tag:</label>
+    <label for='new_tag'> Name: <input type='text' id='new_tag' name='tag[name]'>    
+<input type='submit' value='Submit'>
+</form>

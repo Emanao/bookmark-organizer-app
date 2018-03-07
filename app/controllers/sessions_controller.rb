@@ -1,9 +1,9 @@
 class SessionsController < ApplicationController
     get '/login' do
         if logged_in?
-            redirect :"bookmarks"
+            redirect :'bookmarks'
         else
-            redirect :"users/login"
+            erb :'users/login'
         end
     end
     post '/login' do

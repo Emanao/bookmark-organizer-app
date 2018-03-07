@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20180304231641) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
+    t.string "url"
     t.integer "user_id"
   end
 

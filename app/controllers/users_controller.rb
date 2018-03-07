@@ -3,7 +3,7 @@ class UsersController < ApplicationController
         if logged_in? 
             redirect :'bookmarks' 
         else
-            redirect :'users/signup'
+            erb :'users/signup'
         end
     end
     post '/signup' do
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
             user=User.new(username: params[:username], email: params[:email])
             user.password = params[:password]
             if !!user && user.save
-                session[:id]=user.id
+                session[:user_id]=user.id
                 redirect "bookmarks"
             else
                 flash[:warning]="Unable to log in. Remember that all field are required. Please try again"
