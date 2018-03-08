@@ -6,7 +6,7 @@
     <label for='bookmark_url'>URL : <label><input type='text' name='bookmark[url]' value='<%=@bookmark.url%>'><br></br>
 
     <h2>Tags</h2>
-    <label>Edit exiting tags: </label><br></br>
+    <label>Edit existing tags: </label><br></br>
     <%@tags.each do |tag|%>
         <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'<%='checked' if @bookmark.tags.include?tag%>><%=tag.name%>
     <%end%>
