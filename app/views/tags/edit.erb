@@ -1,0 +1,18 @@
+<h1>Edit Tag</h1>
+<form action='/tags/<%=@tag.id%>' method='post'>
+<input type='hidden' name='_method' value='patch'>
+    <%if flash.has_key?(:warning)%><%=flash[:warning]%><%end%>
+    <label for='tag_name'>Name : <label><input id='tag_name' type='text' name='tag[name]' value='<%=@tag.name%>'><br></br>
+
+    <h2>Bookmarks</h2>
+    <label>Edit exiting bookmark: </label><br></br>
+    <%@tag.bookmarks.each do |bookmark|%>
+        <input type='checkbox' name='tag[bookmark_ids][]' value='<%=bookmark.id%>'<%='checked' if @tag.bookmarks.include?bookmark%>><%=bookmark.name%>
+    <%end%>
+    <br></br>
+    <label>and/or, create a new bookmark:</label><br></br>
+    <p><label for='bookmark_name'>Name: </label><input type='text' id='bookmark_name' name='bookmark[name]'></p>
+    <p><label for='bookmark_url'>URL: </label><input type='text' id='bookmark_url' name='bookmark[url]'></p>    
+    <input type='submit' value='Update'>
+</form>
+</form>

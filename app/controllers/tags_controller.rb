@@ -4,8 +4,30 @@ class TagsController < ApplicationController
     end
     #show
     get '/tags/:id' do
-        @tag=current_user.tags.find_by(id: params[:id])
-        erb :'tags/show'
+        if logged_in? 
+            @tag=current_user.tags.find_by(id: params[:id])
+            erb :'tags/show'
+        else
+            redirect "login"
+        end
+
+    end
+    #edit
+    get '/tags/:id/edit' do
+        if logged_in? 
+            @tag=current_user.tags.find_by(id: params[:id])
+            erb :'tags/edit'
+        else
+            redirect "login"
+        end
+
+    end
+    patch '/tags/:id' do 
+        if logged_in? 
+
+        else
+            redirect "login"
+        end
     end
 
 end
