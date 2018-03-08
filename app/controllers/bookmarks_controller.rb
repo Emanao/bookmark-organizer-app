@@ -51,7 +51,7 @@ class BookmarksController < ApplicationController
     get '/bookmarks/:id/edit' do
         if logged_in?
             @bookmark=current_user.bookmarks.find_by(id: params[:id])
-            @tags=Tag.all
+            @tags=current_user.tags.distinct
             erb :"bookmarks/edit"
         else
             redirect "login"
