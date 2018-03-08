@@ -4,7 +4,6 @@ class BookmarksController < ApplicationController
         if logged_in?
             @user=current_user      
             @bookmarks=current_user.bookmarks
-            binding.pry
             @tags=current_user.tags.distinct
             erb :'bookmarks/index'
         else
@@ -59,7 +58,6 @@ class BookmarksController < ApplicationController
     end
     patch '/bookmarks/:id' do
         if logged_in?
-            binding.pry
             bookmark = current_user.bookmarks.find_by(id: params[:id])
             bookmark.update(params[:bookmark])
             bookmark.tags.find_or_create_by(params[:tag]) if !params[:tag][:name].empty?
