@@ -29,5 +29,15 @@ class TagsController < ApplicationController
             redirect "login"
         end
     end
+    #delete action
+    delete '/tags/:id/delete' do
+        if logged_in?
+            tag = current_user.tags.find_by(id: params[:id])
+            tag.destroy if !!tag
+            redirect "bookmarks"
+        else
+            redirect "login"
+        end
+    end
 
 end
