@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
     get '/tags' do
-        "Welcome to the Bookmark Organizer - Tags index" 
+        redirect "bookmarks"
     end
     #show
     get '/tags/:id' do
@@ -24,6 +24,15 @@ class TagsController < ApplicationController
     end
     patch '/tags/:id' do 
         if logged_in? 
+            binding.pry
+            tag = current_user.tags.find_by(id: params[:id])
+            tag.update(params[:tag])
+            if !!tag.valid?
+                redirect "tags/#{tag.id}"
+            else
+                flash[:warning]='Unable to edit this tag. Remember that the tag name can not be blank. Please try again '
+                redirect "tags/#{params[:id]}/edit"
+            end
 
         else
             redirect "login"
