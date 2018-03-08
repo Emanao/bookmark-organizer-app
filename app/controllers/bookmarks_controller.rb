@@ -4,7 +4,8 @@ class BookmarksController < ApplicationController
         if logged_in?
             @user=current_user      
             @bookmarks=current_user.bookmarks
-            @tags=current_user.tags
+            binding.pry
+            @tags=current_user.tags.distinct
             erb :'bookmarks/index'
         else
             redirect "login"
@@ -13,7 +14,7 @@ class BookmarksController < ApplicationController
     #new
     get '/bookmarks/new' do
         if logged_in? 
-            @tags = Tag.all
+            @tags = current_user.tags.distinct
             erb :'bookmarks/new'
         else
             redirect "login"
@@ -24,11 +25,10 @@ class BookmarksController < ApplicationController
             bookmark = Bookmark.new(params[:bookmark])
             bookmark.user=current_user
             bookmark.tags.build(params[:tag]) if !params[:tag][:name].empty?
-            
             if !!bookmark.save            
                 redirect "bookmarks"
             else
-                flash[:warning]='Unable to create a new bookmark. Remember that the name is required. Please try again '
+                flash[:warning]='Unable to create a new bookmark. Remember that the bookmark name cannot be blank. Please try again '
                 redirect "bookmarks/new"
             end
             
@@ -50,6 +50,8 @@ class BookmarksController < ApplicationController
     # edit
     get '/bookmarks/:id/edit' do
         if logged_in?
+            @bookmark=current_user.bookmarks.find_by(id: params[:id])
+            @tags=Tag.all
             erb :"bookmarks/edit"
         else
             redirect "login"
@@ -57,8 +59,16 @@ class BookmarksController < ApplicationController
     end
     patch '/bookmarks/:id' do
         if logged_in?
-            @bookmark = current_user.bookmarks.find_by(id: params[:id])
-            redirect "bookmarks/show"
+            binding.pry
+            bookmark = current_user.bookmarks.find_by(id: params[:id])
+            bookmark.update(params[:bookmark])
+            bookmark.tags.find_or_create_by(params[:tag]) if !params[:tag][:name].empty?
+            if !!bookmark.valid?
+                redirect "bookmarks/#{bookmark.id}"
+            else
+                flash[:warning]='Unable to edit this bookmark. Remember that the bookmark name can not be blank. Please try again '
+                redirect "bookmarks/new"
+            end
         else
             redirect "login"
         end
