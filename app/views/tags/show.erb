@@ -1,4 +1,4 @@
-<h1>Show Bookmarks for Tag Name : <%=@tag.name%></h1><br></br>
+<h1>Show Tag - <%=@tag.name%> - for Bookmarks: </h1><br></br>
 <table style="width:100%">
   <tr>
     <th>Name</th>
@@ -6,8 +6,8 @@
   </tr>
     <%@tag.bookmarks.each do |bookmark|%>
     <tr>
-        <td><a href='/bookmarks/<%=bookmark.id%>'><%=bookmark.name %></a></td>
-         <td><a href='<%=bookmark.url%>' target='_blank'> <%=bookmark.url%></a></td>
+        <td><%=bookmark.name %></td>
+         <td><%=bookmark.url%></td>
     </tr>
     <%end%>
 </table><br></br>
