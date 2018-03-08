@@ -3,11 +3,17 @@
 <table style="width:100%">
   <tr>
     <th>Name</th>
+    <th>Tags</th>
     <th>URL</th> 
   </tr>
   <%@bookmarks.each do |bookmark|%>
     <tr>
         <td><a href='bookmarks/<%=bookmark.id%>'><%=bookmark.name%></a></td>
+        <td>
+        <%bookmark.tags.each do |tag|%>
+            <a href='tags/<%=tag.id%>'><%=tag.name %></a>
+        <%end%>
+        </td>
         <td><a href='<%=bookmark.url%>' target='_blank'><%=bookmark.url%></a></td>
     </tr>
   <%end%>
@@ -18,9 +24,9 @@
     <tr>
         <th>Name</th>
     </tr>
-<%@tags.each do |tag|%>
-    <tr>
-        <td><a href=''><%=tag.name%></td>
-    </tr>
-<%end%>
+    <tr><td>  
+    <%@tags.each do |tag|%>
+       <a href=''><%=tag.name %></a>
+    <%end%>
+    </td></tr>
 </table>
