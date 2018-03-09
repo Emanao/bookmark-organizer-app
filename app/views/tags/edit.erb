@@ -1,7 +1,7 @@
 <h1>Edit Tag</h1>
 <form action='/tags/<%=@tag.id%>' method='post'>
 <input type='hidden' name='_method' value='patch'>
-    <%if flash.has_key?(:warning)%><%=flash[:warning]%><%end%>
+    <%if flash.has_key?(:warning)%><%=flash[:warning]%><br></br><%end%>
     <label for='tag_name'>Name : <label><input id='tag_name' type='text' name='tag[name]' value='<%=@tag.name%>'><br></br>
 
     <h2>Bookmarks</h2>
