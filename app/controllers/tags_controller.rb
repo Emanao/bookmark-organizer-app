@@ -24,13 +24,17 @@ class TagsController < ApplicationController
     end
     patch '/tags/:id' do 
         if logged_in? 
-            binding.pry
             tag = current_user.tags.find_by(id: params[:id])
-            tag.update(params[:tag])
-            if !!tag.valid?
-                redirect "tags/#{tag.id}"
+            if !!tag
+                tag.update(params[:tag]) 
+                if !!tag.valid?
+                    redirect "tags/#{tag.id}"
+                else
+                    flash[:warning]='Unable to edit this tag. Remember that the tag name can not be blank.'
+                    redirect "tags/#{params[:id]}/edit"
+                end
             else
-                flash[:warning]='Unable to edit this tag. Remember that the tag name can not be blank. Please try again '
+                flash[:warning]='Unable to edit this tag.'
                 redirect "tags/#{params[:id]}/edit"
             end
 
