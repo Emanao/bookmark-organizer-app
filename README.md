@@ -1,9 +1,10 @@
 # bookmark-organizer-app
 
-The Bookmark Organizer app is a sinatra web application that allows users organize their bookmarks with custom tags.
+The Bookmark Organizer app is a sinatra web application that allows users create accounts and manage their bookmarks with custom tags.
+Users have a username, email and password and can create, view, edit and delete bookmarks. Bookmarks have a name, an url and existing tags can be added/removed and/or create and add a new tag to the bookmark. Tags have a name and can only be created linked to bookmarks (they only exist together with a bookmark). Existing tags can be viewed, edited and deleted.
 
 # Usage
-
+To use this app: clone this repository, bundle install, run db:migrate and run shotgun.
 
 
 #Contributing
