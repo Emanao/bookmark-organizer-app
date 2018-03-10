@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
         if logged_in?
             redirect :'bookmarks'
         else
-            erb :'users/login'
+            erb :'users/login', :layout=> :home_layout
         end
     end
     post '/login' do
@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     end
     get '/logout' do
         session.clear
-        redirect "login"
+        redirect "/"
     end
   
 end

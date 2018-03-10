@@ -3,7 +3,7 @@ class UsersController < ApplicationController
         if logged_in? 
             redirect :'bookmarks' 
         else
-            erb :'users/signup'
+            erb :'users/signup', :layout=> :home_layout
         end
     end
     post '/signup' do
