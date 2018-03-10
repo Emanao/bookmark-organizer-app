@@ -3,12 +3,16 @@
     <%if flash.has_key?(:warning)%><%=flash[:warning]%><br></br><%end%>
     <p><label for='bookmark_name'>Name: </label><input type='text' id='bookmark_name' name='bookmark[name]'></p>
     <p><label for='bookmark_url'>URL: </label><input type='text' id='bookmark_url' name='bookmark[url]'></p>
-    <label>Choose an existing tag: </label>
-    <%@tags.each do |tag|%>
-        <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'>
-        <%=tag.name%>
-    <%end%><br></br>
-    <label>and/or, create a new tag:</label><br></br>
+    <%if @tags.empty?%>
+        <p>There are no existing tags. To create a new tag: </p>
+    <%else%>
+        <label>Choose an existing tag: </label>
+        <%@tags.each do |tag|%>
+            <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'>
+            <%=tag.name%>
+        <%end%><br></br>
+        <label>and/or, create a new tag:</label><br></br>
+    <%end%>
     <label for='new_tag'> Name: <input type='text' id='new_tag' name='tag[name]'><br></br>
 <input type='submit' value='Submit'>
 </form>
