@@ -65,12 +65,14 @@ class BookmarksController < ApplicationController
         if logged_in?
             bookmark = current_user.bookmarks.find_by(id: params[:id])
             if !!bookmark
+                #Bug fix for checkboxes: no tag_ids hash will be sendet if all checkboxes are unchecked. I need an empty array of ids in order to be able to update the tags. 
+                params[:bookmark][:tag_ids]=[] if !params[:bookmark].include?(:tag_ids)
                 bookmark.update(params[:bookmark])
                 bookmark.tags.find_or_create_by(params[:tag]) if !params[:tag][:name].empty?
                 if !!bookmark.valid?
                     redirect "bookmarks/#{bookmark.id}"
                 else
-                    flash[:warning]='Unable to edit this bookmark. Remember that the bookmark name can not be blank. Please try again '
+                    flash[:warning]='Unable to edit this bookmark. Remember that the bookmark name can not be blank.'
                     redirect "bookmarks/#{bookmark.id}/edit"
                 end
             else
