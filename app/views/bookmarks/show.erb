@@ -1,10 +1,11 @@
 <h1>Show Bookmark</h1>
 Name : <%=@bookmark.name%><br></br>
 URL: <%=@bookmark.url%><br></br>
-<h2>Tags</h2>
-<%@bookmark.tags.each do |tag|%>
-    <%=tag.name%>
-<%end%>
+<h2>Tags</h2>  
+    <p><%="There are no tags linked to this bookmark." if @bookmark.tags.empty?%></p>
+    <%@bookmark.tags.each do |tag|%>
+        <%=tag.name%>
+    <%end%> 
 <br></br>
 <form action='/bookmarks/<%=@bookmark.id%>/edit' method='get'>
 <input type='submit' value='Edit Bookmark'>
