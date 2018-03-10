@@ -1,17 +1,19 @@
 <h1>Edit Bookmark</h1>
 <form action='/bookmarks/<%=@bookmark.id%>' method='post'>
 <input type='hidden' name='_method' value='patch'>
-    <%if flash.has_key?(:warning)%><%=flash[:warning]%><br></br><%end%>
     <label for='bookmark_name'>Name : <label><input type='text' name='bookmark[name]' value='<%=@bookmark.name%>'><br></br>
     <label for='bookmark_url'>URL : <label><input type='text' name='bookmark[url]' value='<%=@bookmark.url%>'><br></br>
-
-    <h2>Tags</h2>
-    <label>Edit existing tags: </label><br></br>
-    <%@tags.each do |tag|%>
-        <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'<%='checked' if @bookmark.tags.include?tag%>><%=tag.name%>
+    <%if @tags.empty?%>
+        <p>There are no existing tags. To create a new tag:</p>
+    <%else%>
+        <h2>Tags</h2>
+        <label>Edit existing tags: </label><br></br>
+        <%@tags.each do |tag|%>
+            <input type='checkbox' name='bookmark[tag_ids][]' value='<%=tag.id%>'<%='checked' if @bookmark.tags.include?tag%>><%=tag.name%>
+        <%end%>
+        <br></br>
+        <label>and/or, create a new tag:</label><br></br>
     <%end%>
-    <br></br>
-    <label>and/or, create a new tag:</label><br></br>
     <label for='new_tag'> Name: <input type='text' id='new_tag' name='tag[name]'><br></br>    
     <input type='submit' value='Update'>
 </form>
