@@ -24,7 +24,11 @@ class BookmarksController < ApplicationController
             bookmark = Bookmark.new(params[:bookmark])
             if !!bookmark
                 bookmark.user=current_user
-                bookmark.tags.build(params[:tag]) if !params[:tag][:name].empty?
+                #Check if user already has the new Tag and dont run validations when bookmark is saved if field is empty
+                if !params[:tag][:name].empty? 
+                    existing_tag = current_user.tags.find_or_initialize_by(name: params[:tag][:name]) 
+                    bookmark.tags << existing_tag
+                end
                 if !!bookmark.save            
                     redirect "bookmarks"
                 else
@@ -68,7 +72,11 @@ class BookmarksController < ApplicationController
                 #Bug fix for checkboxes: no tag_ids hash will be sendet if all checkboxes are unchecked. I need an empty array of ids in order to be able to update the tags. 
                 params[:bookmark][:tag_ids]=[] if !params[:bookmark].include?(:tag_ids)
                 bookmark.update(params[:bookmark])
-                bookmark.tags.find_or_create_by(params[:tag]) if !params[:tag][:name].empty?
+                #Check if user already has the new Tag  and dont run validations when bookmark is saved if field is empty
+                if !params[:tag][:name].empty? 
+                    existing_tag = current_user.tags.find_or_initialize_by(name: params[:tag][:name]) 
+                    bookmark.tags << existing_tag
+                end                
                 if !!bookmark.valid?
                     redirect "bookmarks/#{bookmark.id}"
                 else
