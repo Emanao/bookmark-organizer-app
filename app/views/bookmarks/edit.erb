@@ -14,6 +14,8 @@
         <br></br>
         <label>and/or, create a new tag:</label><br></br>
     <%end%>
+    
+    <%if flash.has_key?(:existing_warning)%><%=flash[:existing_warning]%><br></br><%end%>
     <label for='new_tag'> Name: <input type='text' id='new_tag' name='tag[name]'><br></br>    
     <input type='submit' value='Update'>
 </form>

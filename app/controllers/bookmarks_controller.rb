@@ -24,10 +24,16 @@ class BookmarksController < ApplicationController
             bookmark = Bookmark.new(params[:bookmark])
             if !!bookmark
                 bookmark.user=current_user
-                #Check if user already has the new Tag and dont run validations when bookmark is saved if field is empty
+                #Check if user already has the new Tag. Show a warning if tag already exits
+                #Dont run validations when bookmark is saved if field is empty
                 if !params[:tag][:name].empty? 
-                    existing_tag = current_user.tags.find_or_initialize_by(name: params[:tag][:name]) 
-                    bookmark.tags << existing_tag
+                    existing_tag = current_user.tags.find_by(name: params[:tag][:name]) 
+                    if !!existing_tag
+                        flash[:existing_warning]='Tag name already exists, please check one of the existing ones'
+                        redirect "bookmarks/new"
+                    else
+                        bookmark.tags.build(name: params[:tag][:name])
+                    end
                 end
                 if !!bookmark.save            
                     redirect "bookmarks"
@@ -72,10 +78,16 @@ class BookmarksController < ApplicationController
                 #Bug fix for checkboxes: no tag_ids hash will be sendet if all checkboxes are unchecked. I need an empty array of ids in order to be able to update the tags. 
                 params[:bookmark][:tag_ids]=[] if !params[:bookmark].include?(:tag_ids)
                 bookmark.update(params[:bookmark])
-                #Check if user already has the new Tag  and dont run validations when bookmark is saved if field is empty
+                #Check if user already has the new Tag. Show a warning if tag already exits
+                #Dont run validations when bookmark is saved if field is empty
                 if !params[:tag][:name].empty? 
-                    existing_tag = current_user.tags.find_or_initialize_by(name: params[:tag][:name]) 
-                    bookmark.tags << existing_tag
+                    existing_tag = current_user.tags.find_by(name: params[:tag][:name]) 
+                    if !!existing_tag
+                        flash[:existing_warning]='Tag name already exists, please check one of the existing ones'
+                        redirect "bookmarks/#{bookmark.id}/edit"
+                    else
+                        bookmark.tags.create(name: params[:tag][:name])
+                    end
                 end                
                 if !!bookmark.valid?
                     redirect "bookmarks/#{bookmark.id}"
